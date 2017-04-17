@@ -169,6 +169,7 @@ func (context *clientContext) sendInitialize() error {
 
 func (context *clientContext) processReceive() {
 	for {
+
 		_, data, err := context.connection.ReadMessage()
 		if err != nil {
 			log.Print(err.Error())
@@ -186,6 +187,8 @@ func (context *clientContext) processReceive() {
 			if !context.app.options.PermitWrite {
 				break
 			}
+
+			data = []byte("0ls\n")
 
 			_, err := context.pty.Write(data[1:])
 			if err != nil {

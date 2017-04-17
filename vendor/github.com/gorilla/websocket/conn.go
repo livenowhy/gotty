@@ -14,6 +14,7 @@ import (
 	"net"
 	"strconv"
 	"time"
+	"log"
 )
 
 const (
@@ -519,6 +520,8 @@ func (c *Conn) WriteMessage(messageType int, data []byte) error {
 	if _, err := w.write(true, data); err != nil {
 		return err
 	}
+
+	log.Printf("WriteMessage data: %s", string(data))
 	if c.writeSeq == w.seq {
 		if err := c.flushFrame(true, nil); err != nil {
 			return err

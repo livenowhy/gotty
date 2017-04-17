@@ -182,7 +182,7 @@ func (context *clientContext) processReceive() {
 		switch data[0] {
 		case Input:
 
-			log.Printf("processReceive Input")
+			log.Printf("processReceive Input: %s \n", string(data))
 			if !context.app.options.PermitWrite {
 				break
 			}

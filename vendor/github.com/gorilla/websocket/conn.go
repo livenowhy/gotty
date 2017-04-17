@@ -14,7 +14,6 @@ import (
 	"net"
 	"strconv"
 	"time"
-	"log"
 )
 
 const (

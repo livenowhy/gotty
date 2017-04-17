@@ -58,16 +58,11 @@ func (context *clientContext) goHandleClient() {
 
 	go func() {
 		defer func() { exit <- true }()
-
-		log.Printf("goHandleClient --> %v", context.command)
-
 		context.processSend()
 	}()
 
 	go func() {
 		defer func() { exit <- true }()
-
-		log.Printf("goHandleClient --> %v", context.command)
 		context.processReceive()
 	}()
 

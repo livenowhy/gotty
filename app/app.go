@@ -424,7 +424,10 @@ func (app *App) handleWS(w http.ResponseWriter, r *http.Request) {
 		writeMutex: &sync.Mutex{},
 	}
 
+	log.Printf("handleWS----> begin")
+
 	context.goHandleClient()
+	log.Printf("handleWS---->   end")
 }
 
 func (app *App) handleCustomIndex(w http.ResponseWriter, r *http.Request) {

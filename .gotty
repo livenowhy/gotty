@@ -2,7 +2,7 @@
 // address = ""
 
 // [string] Port to listen
-// port = "8080"
+// port = "8880"
 
 // [bool] Permit clients to write to the TTY
 // permit_write = false

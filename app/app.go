@@ -134,6 +134,8 @@ func New(command []string, options *Options) (*App, error) {
 
 func ApplyConfigFile(options *Options, filePath string) error {
 	filePath = ExpandHomeDir(filePath)
+
+
 	if _, err := os.Stat(filePath); os.IsNotExist(err) {
 		return err
 	}
@@ -318,6 +320,17 @@ func (app *App) handleWS(w http.ResponseWriter, r *http.Request) {
 	// route / 的入口
 	app.stopTimer()
 
+	//r.Cookie()
+
+	at, err := r.Cookie("_at")
+
+	if err != nil {
+		log.Printf(" r.Cookie is error ")
+		return
+	}
+
+
+	log.Printf("token is at: %s", at)
 	connections := atomic.AddInt64(app.connections, 1)
 	if int64(app.options.MaxConnection) != 0 {
 		if connections >= int64(app.options.MaxConnection) {

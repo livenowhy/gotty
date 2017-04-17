@@ -208,8 +208,6 @@ func (app *App) Run() error {
 	wsMux := http.NewServeMux()
 	wsMux.Handle("/", siteHandler)
 
-	wsMux.Handle("/test", siteHandler)
-
 	wsMux.Handle(path+"/ws", wsHandler)
 	siteHandler = (http.Handler(wsMux))
 
@@ -316,6 +314,8 @@ func (app *App) restartTimer() {
 }
 
 func (app *App) handleWS(w http.ResponseWriter, r *http.Request) {
+
+	// route / 的入口
 	app.stopTimer()
 
 	connections := atomic.AddInt64(app.connections, 1)

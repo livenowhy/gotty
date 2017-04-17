@@ -110,6 +110,9 @@ func (context *clientContext) processSend() {
 			log.Printf("Command exited for: %s", context.request.RemoteAddr)
 			return
 		}
+
+		log.Printf("buf -->: %s", string(buf))
+		log.Printf("buf -->: %d", size)
 		safeMessage := base64.StdEncoding.EncodeToString([]byte(buf[:size]))
 		if err = context.write(append([]byte{Output}, []byte(safeMessage)...)); err != nil {
 			log.Printf(err.Error())

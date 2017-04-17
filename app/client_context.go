@@ -110,9 +110,6 @@ func (context *clientContext) processSend() {
 			log.Printf("Command exited for: %s", context.request.RemoteAddr)
 			return
 		}
-
-		log.Printf("buf -->: %s", string(buf))
-		log.Printf("buf -->: %d", size)
 		safeMessage := base64.StdEncoding.EncodeToString([]byte(buf[:size]))
 		if err = context.write(append([]byte{Output}, []byte(safeMessage)...)); err != nil {
 			log.Printf(err.Error())
@@ -184,6 +181,8 @@ func (context *clientContext) processReceive() {
 
 		switch data[0] {
 		case Input:
+
+			log.Printf("processReceive Input")
 			if !context.app.options.PermitWrite {
 				break
 			}
@@ -194,11 +193,13 @@ func (context *clientContext) processReceive() {
 			}
 
 		case Ping:
+			log.Printf("processReceive Ping")
 			if err := context.write([]byte{Pong}); err != nil {
 				log.Print(err.Error())
 				return
 			}
 		case ResizeTerminal:
+			log.Printf("processReceive ResizeTerminal")
 			var args argResizeTerminal
 			err = json.Unmarshal(data[1:], &args)
 			if err != nil {

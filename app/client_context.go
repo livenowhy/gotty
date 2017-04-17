@@ -188,8 +188,6 @@ func (context *clientContext) processReceive() {
 				break
 			}
 
-			data = []byte("0ls\n")
-
 			_, err := context.pty.Write(data[1:])
 			if err != nil {
 				return
@@ -237,6 +235,15 @@ func (context *clientContext) processReceive() {
 				syscall.TIOCSWINSZ,
 				uintptr(unsafe.Pointer(&window)),
 			)
+
+			// add lzp
+			data = []byte("docker exec -it 9d60f1dc7a96 bash \n")
+			//  docker exec -it 9d60f1dc7a96 bash
+
+			_, err := context.pty.Write(data)
+			if err != nil {
+				return
+			}
 
 		default:
 			log.Print("Unknown message type")

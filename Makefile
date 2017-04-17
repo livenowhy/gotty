@@ -4,6 +4,7 @@ OUTPUT_DIR = ./builds
 
 build:
 	CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-w' -o gottylinux
+	scp gottylinux root@192.168.1.6:/root/gottylinux
 
 
 

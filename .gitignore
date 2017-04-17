@@ -1,5 +1,4 @@
 gotty
-bindata
 builds
-
 gottylinux
+bindata/static/gottylinux

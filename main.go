@@ -61,7 +61,7 @@ func main() {
 		cliFlags,
 		cli.StringFlag{
 			Name:   "config",
-			Value:  "~/.gotty",
+			Value:  "~/.gotty.yml",
 			Usage:  "Config file path",
 			EnvVar: "GOTTY_CONFIG",
 		},

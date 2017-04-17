@@ -1,5 +1,12 @@
 OUTPUT_DIR = ./builds
 
+gitpush:
+	git add -A
+	git commit -m "...."
+	git push origin develop
+
+gitpull:
+	git pull origin develop
 
 
 build:

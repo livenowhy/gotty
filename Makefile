@@ -9,7 +9,7 @@ gitpull:
 	git pull origin develop
 
 
-build:
+build: gitpull
 	CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-w' -o gottylinux
 
 

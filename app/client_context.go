@@ -16,7 +16,6 @@ import (
 
 	"github.com/fatih/structs"
 	"github.com/gorilla/websocket"
-	"fmt"
 )
 
 type clientContext struct {

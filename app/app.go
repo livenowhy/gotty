@@ -184,10 +184,12 @@ func (app *App) Run() error {
 
 	var siteMux = http.NewServeMux()
 
+	log.Printf("sss" + "sssss")
 	if app.options.IndexFile != "" {
 		log.Printf("Using index file at " + app.options.IndexFile)
 		siteMux.Handle(path+"/", customIndexHandler)
 	} else {
+
 		siteMux.Handle(path+"/", http.StripPrefix(path+"/", staticHandler))
 	}
 	siteMux.Handle(path+"/auth_token.js", authTokenHandler)

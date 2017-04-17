@@ -16,6 +16,7 @@ import (
 
 	"github.com/fatih/structs"
 	"github.com/gorilla/websocket"
+	"fmt"
 )
 
 type clientContext struct {
@@ -59,12 +60,15 @@ func (context *clientContext) goHandleClient() {
 	go func() {
 		defer func() { exit <- true }()
 
+		log.Printf("goHandleClient --> %v", context.command)
+
 		context.processSend()
 	}()
 
 	go func() {
 		defer func() { exit <- true }()
 
+		log.Printf("goHandleClient --> %v", context.command)
 		context.processReceive()
 	}()
 
@@ -112,8 +116,6 @@ func (context *clientContext) processSend() {
 			log.Printf("Command exited for: %s", context.request.RemoteAddr)
 			return
 		}
-
-		log.Printf("-->buf: " + string(buf))
 		safeMessage := base64.StdEncoding.EncodeToString([]byte(buf[:size]))
 		if err = context.write(append([]byte{Output}, []byte(safeMessage)...)); err != nil {
 			log.Printf(err.Error())

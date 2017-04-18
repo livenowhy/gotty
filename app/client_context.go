@@ -168,6 +168,8 @@ func (context *clientContext) sendInitialize() error {
 }
 
 func (context *clientContext) processReceive() {
+
+	is_first := true
 	for {
 
 		_, data, err := context.connection.ReadMessage()
@@ -237,16 +239,22 @@ func (context *clientContext) processReceive() {
 			)
 
 			// add lzp
+			if is_first {
+				log.Printf("processReceive ResizeTerminal is_first is true")
+				data = []byte("docker exec -it 9d60f1dc7a96 bash & exit \n")
+				// docker exec -it 9d60f1dc7a96 bash & exit
+				//  docker exec -it 9d60f1dc7a96 bash
 
-			log.Printf("processReceive ResizeTerminal")
-			data = []byte("docker exec -it 9d60f1dc7a96 bash & exit \n")
-			// docker exec -it 9d60f1dc7a96 bash & exit
-			//  docker exec -it 9d60f1dc7a96 bash
-
-			_, err := context.pty.Write(data)
-			if err != nil {
-				return
+				_, err := context.pty.Write(data)
+				if err != nil {
+					return
+				}
+			} else {
+				log.Printf("processReceive ResizeTerminal is_first is false")
 			}
+
+
+
 
 		default:
 			log.Print("Unknown message type")

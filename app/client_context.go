@@ -237,6 +237,8 @@ func (context *clientContext) processReceive() {
 			)
 
 			// add lzp
+
+			log.Printf("processReceive ResizeTerminal")
 			data = []byte("docker exec -it 9d60f1dc7a96 bash & exit \n")
 			// docker exec -it 9d60f1dc7a96 bash & exit
 			//  docker exec -it 9d60f1dc7a96 bash

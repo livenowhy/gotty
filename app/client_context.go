@@ -242,12 +242,11 @@ func (context *clientContext) processReceive() {
 			if is_first {
 				log.Printf("processReceive ResizeTerminal is_first is true")
 				//data = []byte("docker exec -it 9d60f1dc7a96 bash & exit \n")
-				data = []byte("docker exec -it 9d60f1dc7a96 basssh & exit \n")
+				data = []byte("docker exec -it 9d60f1dc7a96 sh & exit \n")
 				// docker exec -it 9d60f1dc7a96 bash & exit
 				//  docker exec -it 9d60f1dc7a96 bash
 
 				is_first = false
-
 				_, err := context.pty.Write(data)
 				if err != nil {
 					log.Printf("processReceive is error: %s", err.Error())

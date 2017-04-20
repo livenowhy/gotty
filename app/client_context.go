@@ -63,6 +63,9 @@ func (context *clientContext) goHandleClient() {
 
 	go func() {
 		defer func() { exit <- true }()
+
+		// 每个客户端, 就是
+		log.Printf("goHandleClient go func \n")
 		context.processReceive()
 	}()
 

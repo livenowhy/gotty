@@ -13,7 +13,7 @@ build: gitpull
 	CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-w' -o ./bindata/gottylinux
 
 restart: build
-	CGO_E
+	/root/gopath/src/github.com/yudai/gotty/bindata/gottylinux bash
 
 
 

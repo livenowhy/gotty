@@ -12,6 +12,9 @@ gitpull:
 build: gitpull
 	CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-w' -o ./bindata/gottylinux
 
+restart: build
+	CGO_E
+
 
 
 gotty: app/resource.go main.go app/*.go

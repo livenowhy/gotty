@@ -175,6 +175,9 @@ func (app *App) Run() error {
 		path += "/" + generateRandomString(app.options.RandomUrlLength)
 	}
 
+	log.Printf("Run path: " + path)
+
+
 	endpoint := net.JoinHostPort(app.options.Address, app.options.Port)
 
 	wsHandler := http.HandlerFunc(app.handleWS)

@@ -53,8 +53,10 @@ type ContextVars struct {
 	RemoteAddr string
 }
 
-func (context *clientContext) goHandleClient() {
+func (context *clientContext) goHandleClient(container_id string) {
 	exit := make(chan bool, 2)
+
+	// container_id="75d9e18be7f1"
 
 	go func() {
 		defer func() { exit <- true }()
@@ -66,7 +68,7 @@ func (context *clientContext) goHandleClient() {
 
 		// 每个客户端, 就是
 		log.Printf("goHandleClient go func \n")
-		context.processReceive()
+		context.processReceive(container_id)
 	}()
 
 	go func() {
@@ -170,7 +172,10 @@ func (context *clientContext) sendInitialize() error {
 	return nil
 }
 
-func (context *clientContext) processReceive() {
+func (context *clientContext) processReceive(container_id string) {
+
+	// CONTAINER ID
+	enter_sh := "docker exec -it " +  container_id + " sh & exit \n"
 
 	is_first := true
 	for {
@@ -245,7 +250,7 @@ func (context *clientContext) processReceive() {
 			if is_first {
 				log.Printf("processReceive ResizeTerminal is_first is true")
 				//data = []byte("docker exec -it 9d60f1dc7a96 bash & exit \n")
-				data = []byte("docker exec -it 9d60f1dc7a96 sh & exit \n")
+				data = []byte(enter_sh)
 				// docker exec -it 9d60f1dc7a96 bash & exit
 				//  docker exec -it 9d60f1dc7a96 bash
 

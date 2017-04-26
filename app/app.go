@@ -217,8 +217,10 @@ func (app *App) Run() error {
 	siteHandler = wrapHeaders(siteHandler)
 
 	wsMux := http.NewServeMux()
-	wsMux.Handle("/*", siteHandler)
+	wsMux.Handle("/", siteHandler)
 	//wsMux.Handle("/", siteHandler)
+
+	log.Printf("path : %s \n", path)
 
 	wsMux.Handle(path+"/ws", wsHandler)
 	wsMux.Handle(path+"/sd", handleTestIndex)

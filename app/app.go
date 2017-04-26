@@ -219,6 +219,7 @@ func (app *App) Run() error {
 
 	wsMux := http.NewServeMux()
 	wsMux.Handle("/", siteHandler)
+	wsMux.Handle("/ssh", siteHandler)
 	wsMux.Handle(path+"/ws", wsHandler)
 
 

@@ -218,7 +218,7 @@ func (app *App) Run() error {
 	wsMux.Handle("/", siteHandler)
 	wsMux.Handle(path+"/ws", wsHandler)
 
-	wsMux.Handle(path+"/sd", wsHandler)
+	wsMux.Handle("/sd", siteHandler)
 
 	siteHandler = (http.Handler(wsMux))
 

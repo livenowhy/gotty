@@ -218,9 +218,8 @@ func (app *App) Run() error {
 	wsMux.Handle("/", siteHandler)
 
 	wsMux.Handle(path+"/ws", wsHandler)
-
-
 	wsMux.Handle(path+"/sd", handleTestIndex)
+
 	siteHandler = (http.Handler(wsMux))
 
 	siteHandler = wrapLogger(siteHandler)
@@ -542,5 +541,9 @@ func ExpandHomeDir(path string) string {
 
 
 func (app *App) handleTestIndex(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, ExpandHomeDir(app.options.IndexFile))
+
+	log.Printf("handleTestIndex: ")
+
+	w.Write([]byte("handleTestIndex"))
+	return
 }

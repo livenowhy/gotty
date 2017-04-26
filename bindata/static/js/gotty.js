@@ -1,7 +1,6 @@
 (function() {
     var httpsEnabled = window.location.protocol == "https:";
-    // var args = window.location.search;
-    var args = "argsargsargsargs";
+    var args = window.location.search;
     var url = (httpsEnabled ? 'wss://' : 'ws://') + window.location.host + window.location.pathname + 'ws';
     var protocols = ["gotty"];
     var autoReconnect = -1;

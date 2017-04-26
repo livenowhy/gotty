@@ -28,6 +28,7 @@ import (
 	"github.com/kr/pty"
 	"github.com/yudai/hcl"
 	"github.com/yudai/umutex"
+	"k8s.io/kubernetes/federation/pkg/kubefed/init"
 )
 
 type InitMessage struct {
@@ -216,11 +217,9 @@ func (app *App) Run() error {
 
 	wsMux := http.NewServeMux()
 	wsMux.Handle("/", siteHandler)
-	//wsMux.Handle("/", siteHandler)
-
-	log.Printf("path : %s \n", path)
-
 	wsMux.Handle(path+"/ws", wsHandler)
+
+	wsMux.Handle(path+"/sd", wsHandler)
 
 	siteHandler = (http.Handler(wsMux))
 
@@ -569,14 +568,4 @@ func ExpandHomeDir(path string) string {
 	} else {
 		return path
 	}
-}
-
-
-
-func (app *App) handleTestIndex(w http.ResponseWriter, r *http.Request) {
-
-	log.Printf("handleTestIndex: ")
-
-	w.Write([]byte("handleTestIndex"))
-	return
 }

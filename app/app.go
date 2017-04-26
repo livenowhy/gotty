@@ -415,7 +415,7 @@ func (app *App) handleWS(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	if "" == container_id || len(container_id) <= 12{
+	if "" == container_id || len(container_id) < 12{
 		log.Print("Failed to parse arguments")
 		return
 	}

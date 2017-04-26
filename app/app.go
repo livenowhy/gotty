@@ -28,7 +28,6 @@ import (
 	"github.com/kr/pty"
 	"github.com/yudai/hcl"
 	"github.com/yudai/umutex"
-	"k8s.io/kubernetes/federation/pkg/kubefed/init"
 )
 
 type InitMessage struct {

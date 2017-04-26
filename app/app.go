@@ -217,7 +217,7 @@ func (app *App) Run() error {
 	siteHandler = wrapHeaders(siteHandler)
 
 	wsMux := http.NewServeMux()
-	wsMux.Handle("/", siteHandler)
+	wsMux.Handle("/*", siteHandler)
 	//wsMux.Handle("/", siteHandler)
 
 	wsMux.Handle(path+"/ws", wsHandler)

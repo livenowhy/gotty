@@ -1,6 +1,6 @@
 (function() {
     var httpsEnabled = window.location.protocol == "https:";
-    var args = window.location.search;
+    var args = window.location.search;  // 在这里传入参数
     var url = (httpsEnabled ? 'wss://' : 'ws://') + window.location.host + window.location.pathname + 'ws';
     var protocols = ["gotty"];
     var autoReconnect = -1;

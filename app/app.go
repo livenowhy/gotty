@@ -135,7 +135,6 @@ func New(command []string, options *Options) (*App, error) {
 func ApplyConfigFile(options *Options, filePath string) error {
 	filePath = ExpandHomeDir(filePath)
 
-
 	if _, err := os.Stat(filePath); os.IsNotExist(err) {
 		return err
 	}
@@ -177,7 +176,6 @@ func (app *App) Run() error {
 
 	log.Printf("Run path: " + path)
 
-
 	endpoint := net.JoinHostPort(app.options.Address, app.options.Port)
 
 	wsHandler := http.HandlerFunc(app.handleWS)
@@ -189,24 +187,22 @@ func (app *App) Run() error {
 
 	var siteMux = http.NewServeMux()
 
-
 	if app.options.IndexFile != "" {
 
 		log.Printf("app.options.IndexFile != null")
 		log.Printf("Using index file at " + app.options.IndexFile)
 		//siteMux.Handle(path + "/", customIndexHandler)
-		siteMux.Handle(path + "/", customIndexHandler)
-		siteMux.Handle(path + "/ssh", customIndexHandler) // add lzp
+		siteMux.Handle(path+"/", customIndexHandler)
+		siteMux.Handle(path+"/ssh", customIndexHandler) // add lzp
 	} else {
 		log.Printf("app.options.IndexFile == null")
 		//siteMux.Handle(path + "/", http.StripPrefix(path+"/", staticHandler))
-		siteMux.Handle(path + "/", http.StripPrefix(path+"/", staticHandler))
-		siteMux.Handle(path + "/ssh", http.StripPrefix(path+"/", staticHandler))  // add lzp
+		siteMux.Handle(path+"/", http.StripPrefix(path+"/", staticHandler))
+		siteMux.Handle(path+"/ssh", http.StripPrefix(path+"/", staticHandler)) // add lzp
 	}
-	siteMux.Handle(path + "/auth_token.js", authTokenHandler)
-	siteMux.Handle(path + "/js/", http.StripPrefix(path+"/", staticHandler))
-	siteMux.Handle(path + "/favicon.png", http.StripPrefix(path+"/", staticHandler))
-
+	siteMux.Handle(path+"/auth_token.js", authTokenHandler)
+	siteMux.Handle(path+"/js/", http.StripPrefix(path+"/", staticHandler))
+	siteMux.Handle(path+"/favicon.png", http.StripPrefix(path+"/", staticHandler))
 
 	siteHandler := http.Handler(siteMux)
 
@@ -221,7 +217,6 @@ func (app *App) Run() error {
 	wsMux.Handle("/", siteHandler)
 	wsMux.Handle("/ssh", siteHandler)
 	wsMux.Handle(path+"/ws", wsHandler)
-
 
 	siteHandler = (http.Handler(wsMux))
 
@@ -327,36 +322,8 @@ func (app *App) restartTimer() {
 	}
 }
 
-// http://terminal.boxlinker.com:8888/?container_id=75d9e18be7f1&name=sds
+// http://terminal.boxlinker.com:8888/?container_id=75d9e18be7f1
 func (app *App) handleWS(w http.ResponseWriter, r *http.Request) {
-
-	err := r.ParseForm()
-	log.Printf(" r.URL.Path: " + r.URL.Path)
-	log.Printf(" r.URL.RawQuery: " + r.URL.RawQuery)
-
-
-
-
-
-	if err != nil {
-		log.Printf(" r.ParseForm is error: %s", err.Error())
-		return
-	}
-
-	r.ParseForm();
-
-
-	for k, v := range r.Form {
-		log.Printf("k: %s, v: %s \n", k, v[0])
-	}
-
-
-
-    name := r.FormValue("name")
-	log.Printf("name : " + name)
-	containerid := r.Form.Get("container_id")
-	log.Printf("containerid : %s \n", containerid)
-
 	// route / 的入口
 	app.stopTimer()
 
@@ -364,14 +331,10 @@ func (app *App) handleWS(w http.ResponseWriter, r *http.Request) {
 
 	at, err := r.Cookie("_at")
 
-
-
-
 	if err != nil {
 		log.Printf(" r.Cookie is error ")
 		return
 	}
-
 
 	log.Printf("token is at: %s", at)
 	connections := atomic.AddInt64(app.connections, 1)
@@ -429,9 +392,36 @@ func (app *App) handleWS(w http.ResponseWriter, r *http.Request) {
 		}
 		params := query.Query()["arg"]
 		if len(params) != 0 {
+			log.Print("success to parse arguments" + params)
 			argv = append(argv, params...)
 		}
 	}
+
+	// http://terminal.boxlinker.com:8888/?container_id=75d9e18be7f1
+	// 获取 container_id
+	container_id := ""
+	if app.options.PermitArguments {
+		if init.Arguments == "" {
+			init.Arguments = "?"
+		}
+		query, err := url.Parse(init.Arguments)
+		if err != nil {
+			log.Print("Failed to parse arguments")
+			conn.Close()
+			return
+		}
+		params := query.Query()["container_id"]
+		if len(params) != 0 {
+			container_id = params
+		}
+	}
+
+	if "" == container_id {
+		log.Print("Failed to parse arguments")
+		return
+	}
+	// 获取 container_id
+
 
 	app.server.StartRoutine()
 
@@ -470,7 +460,7 @@ func (app *App) handleWS(w http.ResponseWriter, r *http.Request) {
 		writeMutex: &sync.Mutex{},
 	}
 
-	container_id :="75d9e18be7f1"
+
 	context.goHandleClient(container_id)
 }
 

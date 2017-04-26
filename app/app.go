@@ -411,7 +411,7 @@ func (app *App) handleWS(w http.ResponseWriter, r *http.Request) {
 		}
 		params := query.Query()["container_id"]
 		if len(params) != 0 {
-			container_id = params
+			container_id = params[0]
 		}
 	}
 

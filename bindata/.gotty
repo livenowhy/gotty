@@ -8,7 +8,7 @@ port = "8888"
 permit_write = true
 
 // [bool] Enable basic authentication
-enable_basic_auth = true
+// enable_basic_auth = true
 
 // [string] Default username and password of basic authentication (user:pass)
 //          To enable basic authentication, set `true` to `enable_basic_auth`
@@ -22,7 +22,7 @@ enable_basic_auth = true
 // random_url_length = 8
 
 // [bool] Enable TLS/SSL
-// enable_tls = false
+enable_tls = true
 
 // [string] Default TLS certificate file path
 // tls_crt_file = "~/.gotty.crt"
@@ -64,7 +64,7 @@ enable_basic_auth = true
 // once = false
 
 // [bool] Permit clients to send command line arguments in URL (e.g. http://example.com:8080/?arg=AAA&arg=BBB)
-// permit_arguments = false
+//  permit_arguments = false
 
 // [object] Client terminal (hterm) preferences
 // preferences {

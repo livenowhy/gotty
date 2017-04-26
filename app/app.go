@@ -392,7 +392,6 @@ func (app *App) handleWS(w http.ResponseWriter, r *http.Request) {
 		}
 		params := query.Query()["arg"]
 		if len(params) != 0 {
-			log.Print("success to parse arguments" + params)
 			argv = append(argv, params...)
 		}
 	}
@@ -400,7 +399,7 @@ func (app *App) handleWS(w http.ResponseWriter, r *http.Request) {
 	// http://terminal.boxlinker.com:8888/?container_id=75d9e18be7f1
 	// 获取 container_id
 	container_id := ""
-	if app.options.PermitArguments {
+	if true {
 		if init.Arguments == "" {
 			init.Arguments = "?"
 		}
@@ -416,7 +415,7 @@ func (app *App) handleWS(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	if "" == container_id {
+	if "" == container_id || len(container_id) <= 12{
 		log.Print("Failed to parse arguments")
 		return
 	}

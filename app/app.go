@@ -322,7 +322,7 @@ func (app *App) restartTimer() {
 	}
 }
 
-// http://terminal.boxlinker.com:8888/?container_id=75d9e18be7f1
+// http://terminal.boxlinker.com:8888/?container_id=b61956c22648
 func (app *App) handleWS(w http.ResponseWriter, r *http.Request) {
 	// route / 的入口
 	app.stopTimer()

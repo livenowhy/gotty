@@ -331,13 +331,18 @@ func (app *App) handleWS(w http.ResponseWriter, r *http.Request) {
 
 	err := r.ParseForm()
 
+
+
 	if err != nil {
 		log.Printf(" r.ParseForm is error: %s", err.Error())
 		return
 	}
 
-	urlParam := r.URL.RawQuery
-	log.Printf("urlParam : %s \n", urlParam)
+	r.ParseForm();
+
+
+	containerid := r.Form.Get("container_id")
+	log.Printf("containerid : %s \n", containerid)
 
 	// route / 的入口
 	app.stopTimer()

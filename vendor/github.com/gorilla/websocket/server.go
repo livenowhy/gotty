@@ -97,13 +97,13 @@ func (u *Upgrader) Upgrade(w http.ResponseWriter, r *http.Request, responseHeade
 		return u.returnError(w, r, http.StatusBadRequest, "websocket: version != 13")
 	}
 
-	if !tokenListContainsValue(r.Header, "Connection", "upgrade") {
-		return u.returnError(w, r, http.StatusBadRequest, "websocket: could not find connection header with token 'upgrade'")
-	}
-
-	if !tokenListContainsValue(r.Header, "Upgrade", "websocket") {
-		return u.returnError(w, r, http.StatusBadRequest, "websocket: could not find upgrade header with token 'websocket'")
-	}
+	//if !tokenListContainsValue(r.Header, "Connection", "upgrade") {
+	//	return u.returnError(w, r, http.StatusBadRequest, "websocket: could not find connection header with token 'upgrade'")
+	//}
+	//
+	//if !tokenListContainsValue(r.Header, "Upgrade", "websocket") {
+	//	return u.returnError(w, r, http.StatusBadRequest, "websocket: could not find upgrade header with token 'websocket'")
+	//}
 
 	checkOrigin := u.CheckOrigin
 	if checkOrigin == nil {

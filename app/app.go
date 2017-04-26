@@ -205,6 +205,8 @@ func (app *App) Run() error {
 	siteMux.Handle(path + "/js/", http.StripPrefix(path+"/", staticHandler))
 	siteMux.Handle(path + "/favicon.png", http.StripPrefix(path+"/", staticHandler))
 
+	siteMux.Handle(path + "/ssh", http.StripPrefix(path+"/", staticHandler))
+
 	siteHandler := http.Handler(siteMux)
 
 	if app.options.EnableBasicAuth {
@@ -218,7 +220,6 @@ func (app *App) Run() error {
 	wsMux.Handle("/", siteHandler)
 	wsMux.Handle(path+"/ws", wsHandler)
 
-	wsMux.Handle("/sd", siteHandler)
 
 	siteHandler = (http.Handler(wsMux))
 

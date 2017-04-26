@@ -196,16 +196,17 @@ func (app *App) Run() error {
 		log.Printf("Using index file at " + app.options.IndexFile)
 		//siteMux.Handle(path + "/", customIndexHandler)
 		siteMux.Handle(path + "/", customIndexHandler)
+		siteMux.Handle(path + "/ssh", customIndexHandler) // add lzp
 	} else {
 		log.Printf("app.options.IndexFile == null")
 		//siteMux.Handle(path + "/", http.StripPrefix(path+"/", staticHandler))
 		siteMux.Handle(path + "/", http.StripPrefix(path+"/", staticHandler))
+		siteMux.Handle(path + "/ssh", http.StripPrefix(path+"/", staticHandler))  // add lzp
 	}
 	siteMux.Handle(path + "/auth_token.js", authTokenHandler)
 	siteMux.Handle(path + "/js/", http.StripPrefix(path+"/", staticHandler))
 	siteMux.Handle(path + "/favicon.png", http.StripPrefix(path+"/", staticHandler))
 
-	siteMux.Handle(path + "/ssh", http.StripPrefix(path+"/", staticHandler))
 
 	siteHandler := http.Handler(siteMux)
 

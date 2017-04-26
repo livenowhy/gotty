@@ -181,6 +181,7 @@ func (app *App) Run() error {
 	endpoint := net.JoinHostPort(app.options.Address, app.options.Port)
 
 	wsHandler := http.HandlerFunc(app.handleWS)
+	handleTestIndex := http.HandlerFunc(app.handleTestIndex)
 	customIndexHandler := http.HandlerFunc(app.handleCustomIndex)
 	authTokenHandler := http.HandlerFunc(app.handleAuthToken)
 	staticHandler := http.FileServer(
@@ -217,6 +218,9 @@ func (app *App) Run() error {
 	wsMux.Handle("/", siteHandler)
 
 	wsMux.Handle(path+"/ws", wsHandler)
+
+
+	wsMux.Handle(path+"/sd", handleTestIndex)
 	siteHandler = (http.Handler(wsMux))
 
 	siteHandler = wrapLogger(siteHandler)
@@ -533,4 +537,10 @@ func ExpandHomeDir(path string) string {
 	} else {
 		return path
 	}
+}
+
+
+
+func (app *App) handleTestIndex(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, ExpandHomeDir(app.options.IndexFile))
 }

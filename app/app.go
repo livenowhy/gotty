@@ -28,6 +28,7 @@ import (
 	"github.com/kr/pty"
 	"github.com/yudai/hcl"
 	"github.com/yudai/umutex"
+	"fmt"
 )
 
 type InitMessage struct {
@@ -339,6 +340,12 @@ func (app *App) handleWS(w http.ResponseWriter, r *http.Request) {
 	}
 
 	r.ParseForm();
+
+
+	for k, v := range r.Form {
+		log.Printf("k: %s, v: %s \n", k, v[0])
+	}
+
 
 
 	containerid := r.Form.Get("container_id")

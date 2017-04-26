@@ -181,7 +181,6 @@ func (app *App) Run() error {
 	endpoint := net.JoinHostPort(app.options.Address, app.options.Port)
 
 	wsHandler := http.HandlerFunc(app.handleWS)
-	handleTestIndex := http.HandlerFunc(app.handleTestIndex)
 	customIndexHandler := http.HandlerFunc(app.handleCustomIndex)
 	authTokenHandler := http.HandlerFunc(app.handleAuthToken)
 	staticHandler := http.FileServer(
@@ -198,7 +197,6 @@ func (app *App) Run() error {
 		//siteMux.Handle(path + "/", customIndexHandler)
 		siteMux.Handle(path + "/", customIndexHandler)
 	} else {
-
 		log.Printf("app.options.IndexFile == null")
 		//siteMux.Handle(path + "/", http.StripPrefix(path+"/", staticHandler))
 		siteMux.Handle(path + "/", http.StripPrefix(path+"/", staticHandler))
@@ -223,7 +221,6 @@ func (app *App) Run() error {
 	log.Printf("path : %s \n", path)
 
 	wsMux.Handle(path+"/ws", wsHandler)
-	wsMux.Handle(path+"/sd", handleTestIndex)
 
 	siteHandler = (http.Handler(wsMux))
 
@@ -329,7 +326,18 @@ func (app *App) restartTimer() {
 	}
 }
 
+// http://terminal.boxlinker.com:8888/?container_id=sdswewewewewewe
 func (app *App) handleWS(w http.ResponseWriter, r *http.Request) {
+
+	err := r.ParseForm()
+
+	if err != nil {
+		log.Printf(" r.ParseForm is error: %s", err.Error())
+		return
+	}
+
+	urlParam := r.URL.RawQuery
+	log.Printf("urlParam : %s \n", urlParam)
 
 	// route / 的入口
 	app.stopTimer()
@@ -337,6 +345,9 @@ func (app *App) handleWS(w http.ResponseWriter, r *http.Request) {
 	//r.Cookie()
 
 	at, err := r.Cookie("_at")
+
+
+
 
 	if err != nil {
 		log.Printf(" r.Cookie is error ")

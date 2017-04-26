@@ -326,7 +326,7 @@ func (app *App) restartTimer() {
 	}
 }
 
-// http://terminal.boxlinker.com:8888/?container_id=sdswewewewewewe
+// http://terminal.boxlinker.com:8888/?container_id=75d9e18be7f1&name=sds
 func (app *App) handleWS(w http.ResponseWriter, r *http.Request) {
 
 	err := r.ParseForm()
@@ -347,6 +347,8 @@ func (app *App) handleWS(w http.ResponseWriter, r *http.Request) {
 
 
 
+    name := r.FormValue("name")
+	log.Printf("name : " + name)
 	containerid := r.Form.Get("container_id")
 	log.Printf("containerid : %s \n", containerid)
 

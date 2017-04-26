@@ -330,6 +330,10 @@ func (app *App) restartTimer() {
 func (app *App) handleWS(w http.ResponseWriter, r *http.Request) {
 
 	err := r.ParseForm()
+	log.Printf(" r.URL.Path: " + r.URL.Path)
+	log.Printf(" r.URL.RawQuery: " + r.URL.RawQuery)
+
+
 
 
 

@@ -413,6 +413,9 @@ func (app *App) handleWS(w http.ResponseWriter, r *http.Request) {
 		conn.Close()
 		return
 	}
+
+	log.Printf("init.Arguments " + init.Arguments)
+
 	argv := app.command[1:]
 	if app.options.PermitArguments {
 		if init.Arguments == "" {

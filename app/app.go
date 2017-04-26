@@ -91,7 +91,7 @@ var DefaultOptions = Options{
 	EnableRandomUrl:     false,
 	RandomUrlLength:     8,
 	IndexFile:           "",
-	EnableTLS:           false,
+	EnableTLS:           true,
 	TLSCrtFile:          "~/.gotty.crt",
 	TLSKeyFile:          "~/.gotty.key",
 	EnableTLSClientAuth: false,

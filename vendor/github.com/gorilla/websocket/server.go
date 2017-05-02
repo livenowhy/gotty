@@ -97,6 +97,7 @@ func (u *Upgrader) Upgrade(w http.ResponseWriter, r *http.Request, responseHeade
 		return u.returnError(w, r, http.StatusBadRequest, "websocket: version != 13")
 	}
 
+	// 不知道去掉有什么影响  : modify lzp 20170426
 	//if !tokenListContainsValue(r.Header, "Connection", "upgrade") {
 	//	return u.returnError(w, r, http.StatusBadRequest, "websocket: could not find connection header with token 'upgrade'")
 	//}

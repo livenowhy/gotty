@@ -200,7 +200,7 @@ func (app *App) Run() error {
 		siteMux.Handle(path+"/", http.StripPrefix(path+"/", staticHandler))
 		siteMux.Handle(path+"/ssh", http.StripPrefix(path+"/", staticHandler)) // add lzp
 	}
-	siteMux.Handle(path+"/auth_token.js", authTokenHandler)
+	siteMux.Handle(path+"/js/auth_token.js", authTokenHandler)
 	siteMux.Handle(path+"/js/", http.StripPrefix(path+"/", staticHandler))
 	siteMux.Handle(path+"/favicon.png", http.StripPrefix(path+"/", staticHandler))
 
@@ -323,6 +323,7 @@ func (app *App) restartTimer() {
 }
 
 // http://terminal.boxlinker.com:8888/?container_id=b61956c22648
+// https://terminal.boxlinker.com:8888/?container_id=1a7fa3ff6ccc
 func (app *App) handleWS(w http.ResponseWriter, r *http.Request) {
 	// route / 的入口
 	app.stopTimer()

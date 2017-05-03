@@ -94,7 +94,7 @@ var DefaultOptions = Options{
 	Credential:          "",
 	EnableRandomUrl:     false,
 	RandomUrlLength:     8,
-	MakeRandomUrlIp:     "0.0.0.0",
+	MakeRandomUrlIp:     "",
 	IndexFile:           "",
 	EnableTLS:           true,
 	TLSCrtFile:          "conf/gotty.crt",

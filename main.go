@@ -9,6 +9,7 @@ import (
 	"github.com/codegangsta/cli"
 
 	"github.com/yudai/gotty/app"
+	"path/filepath"
 )
 
 func main() {
@@ -58,12 +59,26 @@ func main() {
 		exit(err, 3)
 	}
 
+
+	// add lzp
+	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+	if err != nil {
+		exit(err, 4)
+	}
+
+	fmt.Printf("dir: %s \n", dir)
+	gotty_conf := dir + "/conf/gotty"
+	app.DefaultOptions.TLSKeyFile = dir + "/conf/gotty.crt"
+	app.DefaultOptions.TLSCrtFile =   dir + "/conf/gotty.key "
+	app.DefaultOptions.TLSCACrtFile =  dir + "/conf/gotty.ca.crt"
+	// add lzp
+
 	cmd.Flags = append(
 		cliFlags,
 		cli.StringFlag{
 			Name:   "config",
 			//Value:  "~/.gotty",
-			Value:  "conf/gotty",
+			Value:  gotty_conf,
 			Usage:  "Config file path",
 			EnvVar: "GOTTY_CONFIG",
 		},
@@ -81,7 +96,7 @@ func main() {
 		configFile := c.String("config")
 		_, err := os.Stat(app.ExpandHomeDir(configFile))
 		//if configFile != "~/.gotty" || !os.IsNotExist(err) {
-		if configFile != "conf/gotty" || !os.IsNotExist(err) {
+		if configFile != gotty_conf || !os.IsNotExist(err) {
 			if err := app.ApplyConfigFile(&options, configFile); err != nil {
 				exit(err, 2)
 			}

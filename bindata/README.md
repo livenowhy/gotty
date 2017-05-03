@@ -1,4 +1,8 @@
-./gottylinux bash -ip "node节点ip"
+#### 启动命令
+
+    ./gottylinux -ip "172.20.1.10" bash
+    
+    172.20.1.10  node节点ip, bash 要做最后
 
 
 
@@ -20,10 +24,22 @@ scp -r * root@172.20.1.10:/root/sshpods
     /root/sshpods
     
     
+    
+    ssh root@172.20.1.10  "/root/sshpods/gottylinux -ip 172.20.1.10 bash"
+    
     scp -r bindata/* root@172.20.1.10:/root/sshpods
     scp -r bindata/* root@172.20.1.18:/root/sshpods
     scp -r bindata/* root@172.20.1.10:/root/sshpods
     scp -r bindata/* root@172.20.1.10:/root/sshpods
+    
+    
+    
+    scp id_rsa.pub root@172.20.1.27:/root/liu.pub
+    scp id_rsa.pub root@172.20.1.18:/root/liu.pub
+    scp id_rsa.pub root@172.20.1.19:/root/liu.pub
+    scp id_rsa.pub root@172.20.1.28:/root/liu.pub
+    
+    
     
     
     172.20.1.10  :--> 72f644c94f58b048ce32901d38d30672

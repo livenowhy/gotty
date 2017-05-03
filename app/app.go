@@ -28,6 +28,8 @@ import (
 	"github.com/kr/pty"
 	"github.com/yudai/hcl"
 	"github.com/yudai/umutex"
+	"crypto/md5"
+	"fmt"
 )
 
 type InitMessage struct {
@@ -60,6 +62,7 @@ type Options struct {
 	Credential          string                 `hcl:"credential"`
 	EnableRandomUrl     bool                   `hcl:"enable_random_url"`
 	RandomUrlLength     int                    `hcl:"random_url_length"`
+	MakeRandomUrlIp     string                 `hcl:"make_random_url_ip"`
 	IndexFile           string                 `hcl:"index_file"`
 	EnableTLS           bool                   `hcl:"enable_tls"`
 	TLSCrtFile          string                 `hcl:"tls_crt_file"`
@@ -171,7 +174,7 @@ func (app *App) Run() error {
 
 	path := ""
 	if app.options.EnableRandomUrl {
-		path += "/" + generateRandomString(app.options.RandomUrlLength)
+		path += "/" + app.generateRandomString()
 	}
 
 	log.Printf("Run path: " + path)
@@ -527,15 +530,29 @@ func wrapBasicAuth(handler http.Handler, credential string) http.Handler {
 	})
 }
 
-func generateRandomString(length int) string {
-	const base = 36
-	size := big.NewInt(base)
-	n := make([]byte, length)
-	for i, _ := range n {
-		c, _ := rand.Int(rand.Reader, size)
-		n[i] = strconv.FormatInt(c.Int64(), base)[0]
+// MakeRandomUrlIp
+
+// add lzp length 不采用外部传入,使用ip生成
+func (app *App)generateRandomString() string {
+
+	if "" == app.options.MakeRandomUrlIp {
+		log.Printf("app.options.MakeRandomUrlIp==null")
+		const base = 36
+		size := big.NewInt(base)
+		n := make([]byte, app.options.RandomUrlLength)
+		for i, _ := range n {
+			c, _ := rand.Int(rand.Reader, size)
+			n[i] = strconv.FormatInt(c.Int64(), base)[0]
+		}
+		return string(n)
 	}
-	return string(n)
+	log.Printf("app.options.MakeRandomUrlIp: %s", app.options.MakeRandomUrlIp)
+
+	data := []byte(app.options.MakeRandomUrlIp)
+    has := md5.Sum(data)
+	md5str1 := fmt.Sprintf("%x", has) //将[]byte转成16进制
+	return string(md5str1)
+
 }
 
 func listAddresses() (addresses []string) {

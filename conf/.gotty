@@ -15,11 +15,14 @@ permit_write = true
 // credential = "user:pass"
 
 // [bool] Enable random URL generation
-// enable_random_url = false
+ enable_random_url = true
 
 // [int] Default length of random strings appended to URL
 //       To enable random URL generation, set `true` to `enable_random_url`
-// random_url_length = 8
+ random_url_length = 32
+
+// 使用ip生成随机url前缀
+// make_random_url_ip = "129.212.22.2"
 
 // [bool] Enable TLS/SSL
 enable_tls = true

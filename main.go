@@ -25,6 +25,7 @@ func main() {
 		flag{"credential", "c", "Credential for Basic Authentication (ex: user:pass, default disabled)"},
 		flag{"random-url", "r", "Add a random string to the URL"},
 		flag{"random-url-length", "", "Random URL length"},
+		flag{"make_random_url_ip", "ip", "Make Random URL By Ip"},
 		flag{"tls", "t", "Enable TLS/SSL"},
 		flag{"tls-crt", "", "TLS/SSL certificate file path"},
 		flag{"tls-key", "", "TLS/SSL key file path"},

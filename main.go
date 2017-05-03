@@ -68,8 +68,8 @@ func main() {
 
 	fmt.Printf("dir: %s \n", dir)
 	gotty_conf := dir + "/conf/gotty"
-	app.DefaultOptions.TLSKeyFile = dir + "/conf/gotty.crt"
-	app.DefaultOptions.TLSCrtFile =   dir + "/conf/gotty.key "
+	app.DefaultOptions.TLSKeyFile = dir + "/conf/gotty.key"
+	app.DefaultOptions.TLSCrtFile =   dir + "/conf/gotty.crt"
 	app.DefaultOptions.TLSCACrtFile =  dir + "/conf/gotty.ca.crt"
 	// add lzp
 

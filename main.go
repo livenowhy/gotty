@@ -62,7 +62,8 @@ func main() {
 		cliFlags,
 		cli.StringFlag{
 			Name:   "config",
-			Value:  "~/.gotty",
+			//Value:  "~/.gotty",
+			Value:  "./conf/gotty",
 			Usage:  "Config file path",
 			EnvVar: "GOTTY_CONFIG",
 		},
@@ -79,7 +80,8 @@ func main() {
 
 		configFile := c.String("config")
 		_, err := os.Stat(app.ExpandHomeDir(configFile))
-		if configFile != "~/.gotty" || !os.IsNotExist(err) {
+		//if configFile != "~/.gotty" || !os.IsNotExist(err) {
+		if configFile != "./conf/gotty" || !os.IsNotExist(err) {
 			if err := app.ApplyConfigFile(&options, configFile); err != nil {
 				exit(err, 2)
 			}

@@ -60,18 +60,18 @@ func main() {
 	}
 
 
+	// add lzp
 	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
 	if err != nil {
 		exit(err, 4)
 	}
 
 	fmt.Printf("dir: %s \n", dir)
-
 	gotty_conf := dir + "/conf/gotty"
-
 	app.DefaultOptions.TLSKeyFile = dir + "/conf/gotty.crt"
 	app.DefaultOptions.TLSCrtFile =   dir + "/conf/gotty.key "
 	app.DefaultOptions.TLSCACrtFile =  dir + "/conf/gotty.ca.crt"
+	// add lzp
 
 	cmd.Flags = append(
 		cliFlags,

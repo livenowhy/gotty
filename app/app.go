@@ -221,7 +221,6 @@ func (app *App) Run() error {
 	wsMux.Handle("/", siteHandler)
 	wsMux.Handle("/ssh", siteHandler)
 	wsMux.Handle(path+"/ws", wsHandler)
-	wsMux.Handle(path+"/ssss", wsHandler)
 
 	siteHandler = (http.Handler(wsMux))
 

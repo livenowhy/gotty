@@ -11,8 +11,8 @@ devscp:
 
 
 devrun:
-	ssh root@172.20.1.10  "nohup /root/sshpods/gottylinux -ip 172.20.1.10 bash >> /root/sshpods/log.log &"
-	ssh root@172.20.1.18  "nohup /root/sshpods/gottylinux -ip 172.20.1.18 bash >> /root/sshpods/log.log &"
-	ssh root@172.20.1.19  "nohup /root/sshpods/gottylinux -ip 172.20.1.19 bash >> /root/sshpods/log.log &"
-	ssh root@172.20.1.27  "nohup /root/sshpods/gottylinux -ip 172.20.1.27 bash >> /root/sshpods/log.log &"
-	ssh root@172.20.1.28  "nohup /root/sshpods/gottylinux -ip 172.20.1.28 bash >> /root/sshpods/log.log &"
+	ssh root@172.20.1.10  "/root/sshpods/gottylinux -ip 172.20.1.10 bash & >> /root/sshpods/log.log &"
+	ssh root@172.20.1.18  "/root/sshpods/gottylinux -ip 172.20.1.18 bash & >> /root/sshpods/log.log &"
+	ssh root@172.20.1.19  "/root/sshpods/gottylinux -ip 172.20.1.19 bash & >> /root/sshpods/log.log &"
+	ssh root@172.20.1.27  "/root/sshpods/gottylinux -ip 172.20.1.27 bash & >> /root/sshpods/log.log &"
+	ssh root@172.20.1.28  "/root/sshpods/gottylinux -ip 172.20.1.28 bash & >> /root/sshpods/log.log &"

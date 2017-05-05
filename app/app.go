@@ -428,7 +428,10 @@ func (app *App) handleWS(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// 获取 container_id
-	retbool, _ := CheckPods(at, container_id)
+
+	token := at.String()
+	log.Printf("CheckPods token is : %s", token)
+	retbool, _ := CheckPods(token, container_id)
 	if retbool == false {
 		log.Print("Failed token and container_id Don't match ")
 		http.Error(w, "Not enough permissions", 401)

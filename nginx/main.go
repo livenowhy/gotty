@@ -1,35 +1,15 @@
 package main
 
-import (
-	"path/filepath"
-	"os"
-	"os/exec"
-	"fmt"
-	"strings"
-)
+import "fmt"
+import "github.com/yudai/gotty/app"
 
 func main() {
+	ret, _ := app.CheckPods("caa83842-df79-440e-806f-515fd2558fdc", "0e4a97b9800f540b360a21ba434565313d94cc8250a2dd1d32d4a3bf4336e849")
 
-
-
-
-
-	file, err := exec.LookPath(os.Args[0])
-	if err != nil {
-		fmt.Println(err.Error())
+	if ret {
+		fmt.Printf("is true")
+	}else {
+		fmt.Printf("is false")
 	}
-	path, err := filepath.Abs(file)
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-	i := strings.LastIndex(path, "/")
-	if i < 0 {
-		i = strings.LastIndex(path, "\\")
-	}
-	if i < 0 {
-		fmt.Println(`error: Can't find "/" or "\".`)
-	}
-
-	fmt.Println(string(path[0 : i+1]))
 
 }

@@ -22,14 +22,14 @@ import (
 	"text/template"
 	"time"
 
+	"crypto/md5"
+	"fmt"
 	"github.com/braintree/manners"
 	"github.com/elazarl/go-bindata-assetfs"
 	"github.com/gorilla/websocket"
 	"github.com/kr/pty"
 	"github.com/yudai/hcl"
 	"github.com/yudai/umutex"
-	"crypto/md5"
-	"fmt"
 )
 
 type InitMessage struct {
@@ -85,19 +85,18 @@ type Options struct {
 
 var Version = "0.0.13"
 
-
 var DefaultOptions = Options{
-	Address:             "",
-	Port:                "8080",
-	PermitWrite:         true,
-	EnableBasicAuth:     false,
-	Credential:          "",
-	EnableRandomUrl:     false,
-	RandomUrlLength:     8,
-	MakeRandomUrlIp:     "",
-	IndexFile:           "",
-	EnableTLS:           true,
-	TLSCrtFile:          "conf/gotty.crt",
+	Address:         "",
+	Port:            "8080",
+	PermitWrite:     true,
+	EnableBasicAuth: false,
+	Credential:      "",
+	EnableRandomUrl: false,
+	RandomUrlLength: 8,
+	MakeRandomUrlIp: "",
+	IndexFile:       "",
+	EnableTLS:       true,
+	TLSCrtFile:      "conf/gotty.crt",
 	//TLSCrtFile:          "~/.gotty.crt",
 	//TLSKeyFile:          "~/.gotty.key",
 	TLSKeyFile:          "conf/gotty.key",
@@ -423,12 +422,17 @@ func (app *App) handleWS(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	if "" == container_id || len(container_id) < 12{
+	if "" == container_id || len(container_id) < 12 {
 		log.Print("Failed to parse arguments")
+		http.Error(w, "Not enough permissions", 401)
 		return
 	}
 	// 获取 container_id
-
+	retbool, _ := CheckPods(at, container_id)
+	if retbool == false {
+		log.Print("Failed token and container_id Don't match ")
+		return
+	}
 
 	app.server.StartRoutine()
 
@@ -466,7 +470,6 @@ func (app *App) handleWS(w http.ResponseWriter, r *http.Request) {
 		pty:        ptyIo,
 		writeMutex: &sync.Mutex{},
 	}
-
 
 	context.goHandleClient(container_id)
 }
@@ -536,7 +539,7 @@ func wrapBasicAuth(handler http.Handler, credential string) http.Handler {
 // MakeRandomUrlIp
 
 // add lzp length 不采用外部传入,使用ip生成
-func (app *App)generateRandomString() string {
+func (app *App) generateRandomString() string {
 
 	if "" == app.options.MakeRandomUrlIp {
 		log.Printf("app.options.MakeRandomUrlIp==null")
@@ -552,7 +555,7 @@ func (app *App)generateRandomString() string {
 	log.Printf("app.options.MakeRandomUrlIp: %s", app.options.MakeRandomUrlIp)
 
 	data := []byte(app.options.MakeRandomUrlIp)
-    has := md5.Sum(data)
+	has := md5.Sum(data)
 	md5str1 := fmt.Sprintf("%x", has) //将[]byte转成16进制
 	return string(md5str1)
 

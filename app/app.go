@@ -424,13 +424,14 @@ func (app *App) handleWS(w http.ResponseWriter, r *http.Request) {
 
 	if "" == container_id || len(container_id) < 12 {
 		log.Print("Failed to parse arguments")
-		http.Error(w, "Not enough permissions", 401)
+
 		return
 	}
 	// 获取 container_id
 	retbool, _ := CheckPods(at, container_id)
 	if retbool == false {
 		log.Print("Failed token and container_id Don't match ")
+		http.Error(w, "Not enough permissions", 401)
 		return
 	}
 
